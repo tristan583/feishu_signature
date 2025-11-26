@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飞书个性签名动态表情</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 300px; /* 适配飞书链接预览尺寸 */
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+        }
+        
+        .signature-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        /* 动态表情容器 */
+        .emoji-container {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 动态表情 - 使用CSS绘制简单的表情 */
+        .emoji {
+            width: 28px;
+            height: 28px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 动画效果：轻微浮动 + 缓慢旋转 */
+            animation: floatRotate 1.5s ease-in-out infinite;
+        }
+        
+        /* 眼睛 */
+        .emoji::before,
+        .emoji::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #333;
+            border-radius: 50%;
+            top: 8px;
+        }
+        
+        .emoji::before {
+            left: 6px;
+        }
+        
+        .emoji::after {
+            right: 6px;
+        }
+        
+        /* 嘴巴 */
+        .emoji .mouth {
+            position: absolute;
+            bottom: 6px;
+            width: 16px;
+            height: 8px;
+            border-bottom: 2px solid #333;
+            border-radius: 50%;
+        }
+        
+        /* 动画关键帧：浮动和旋转 */
+        @keyframes floatRotate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-2px) rotate(-1deg);
+            }
+            50% {
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-2px) rotate(1deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+        
+        /* 签名文字 */
+        .signature-text {
+            white-space: nowrap;
+            color: #333;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 320px) {
+            body {
+                width: 280px;
+            }
+            
+            .signature-text {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signature-container">
+        <!-- 表情位置：开头 -->
+        <div class="emoji-container">
+            <!-- 默认使用CSS绘制的表情，如需替换为GIF/APNG，请修改下面的代码 -->
+            <!-- <div class="emoji">
+                <div class="mouth"></div>
+            </div> -->
+            <!-- 替换为GIF/APNG的示例（取消注释并注释掉上面的div.emoji）：-->
+            <img src="./gif/xtxg1.gif" alt="动态表情" width="28" height="28" style="background: transparent;">
+        </div>
+        
+        <!-- 签名文字 -->
+        <div class="signature-text">今天周三，打起精神！</div>
+        
+        <!-- 表情位置：结尾（默认注释，如需使用请取消注释并注释掉开头的表情） -->
+        <!-- 
+        <div class="emoji-container">
+            <div class="emoji">
+                <div class="mouth"></div>
+            </div>
+        </div>
+        -->
+    </div>
+    
+    <script>
+        // 配置项 - 可自定义修改
+        const config = {
+            signatureText: '今天周三，打起精神！', // 自定义签名文字
+            emojiPosition: 'start' // 'start' 或 'end'，表情位置
+        };
+        
+        // 应用配置
+        document.querySelector('.signature-text').textContent = config.signatureText;
+        
+        if (config.emojiPosition === 'end') {
+            // 显示结尾表情，隐藏开头表情
+            const startEmoji = document.querySelector('.signature-container > .emoji-container:nth-child(1)');
+            const endEmoji = document.querySelector('.signature-container > .emoji-container:nth-child(3)');
+            
+            if (startEmoji && endEmoji) {
+                startEmoji.style.display = 'none';
+                endEmoji.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
